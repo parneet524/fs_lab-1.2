@@ -1,7 +1,5 @@
 import EmployeeDirectoryPage from "./components/EmployeeDirectoryPage";
 
-function App() {
+export default function App() {
   return <EmployeeDirectoryPage />;
 }
-
-export default App;
