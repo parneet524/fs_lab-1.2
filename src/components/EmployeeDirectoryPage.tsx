@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import initialDepartments from "../data/departments.json";
 import DepartmentSection from "./DepartmentSection";
-import Header from "./Header";
-import Footer from "./Footer";
 import type { Department } from "../types/Department";
 import AddEmployeeForm from "./AddEmployeeForm";
 
@@ -24,40 +22,27 @@ function EmployeeDirectoryPage() {
 
   const departmentNames = departments.map((d) => d.name);
 
-  function handleAddEmployee(
-    firstName: string,
-    lastName: string,
-    deptName: string
-  ) {
+  function handleAddEmployee(firstName: string, lastName: string, deptName: string) {
     setDepartments((prev) =>
       prev.map((dept) =>
         dept.name === deptName
-          ? {
-              ...dept,
-              employees: [...dept.employees, { firstName, lastName }],
-            }
+          ? { ...dept, employees: [...dept.employees, { firstName, lastName }] }
           : dept
       )
     );
   }
 
   return (
-    <>
-      <Header />
+    <main style={{ padding: "1rem" }}>
+      {departments.map((dept: Department, index) => (
+        <DepartmentSection key={index} department={dept} />
+      ))}
 
-      <main>
-        {departments.map((dept: Department, index) => (
-          <DepartmentSection key={index} department={dept} />
-        ))}
-
-        <AddEmployeeForm
-          departmentNames={departmentNames}
-          onAddEmployee={handleAddEmployee}
-        />
-      </main>
-
-      <Footer />
-    </>
+      <AddEmployeeForm
+        departmentNames={departmentNames}
+        onAddEmployee={handleAddEmployee}
+      />
+    </main>
   );
 }
 
