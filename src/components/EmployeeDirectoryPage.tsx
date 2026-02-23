@@ -1,45 +1,56 @@
-import { useEffect, useState } from "react";
-import initialDepartments from "../data/departments.json";
-import DepartmentSection from "./DepartmentSection";
-import type { Department } from "../types/Department";
+import { useState } from "react";
+import { employeeRepo } from "../repositories/employeeRepo";
+import { employeeService } from "../services/employeeService";
 import AddEmployeeForm from "./AddEmployeeForm";
 
-const STORAGE_KEY = "pixell_departments";
-
 function EmployeeDirectoryPage() {
-  const [departments, setDepartments] = useState<Department[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      return JSON.parse(saved) as Department[];
-    }
-    return initialDepartments as Department[];
-  });
+  // Load employees from repository
+  const [employees, setEmployees] = useState(() =>
+    employeeRepo.getEmployees()
+  );
 
-  // Save to localStorage whenever departments change
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(departments));
-  }, [departments]);
+  // Load departments from repository
+  const departments = employeeRepo.getDepartments();
 
-  const departmentNames = departments.map((d) => d.name);
-
-  function handleAddEmployee(firstName: string, lastName: string, deptName: string) {
-    setDepartments((prev) =>
-      prev.map((dept) =>
-        dept.name === deptName
-          ? { ...dept, employees: [...dept.employees, { firstName, lastName }] }
-          : dept
-      )
+  function handleAddEmployee(
+    firstName: string,
+    lastName: string,
+    deptName: string
+  ) {
+    const result = employeeService.createEmployee(
+      firstName,
+      lastName,
+      deptName
     );
+
+    if (result.success) {
+      // Important: create new array reference
+      setEmployees([...employeeRepo.getEmployees()]);
+    } else {
+      alert(result.message);
+    }
   }
 
   return (
     <main style={{ padding: "1rem" }}>
-      {departments.map((dept: Department, index) => (
-        <DepartmentSection key={index} department={dept} />
+      {departments.map((dept) => (
+        <div key={dept.id} style={{ marginBottom: "20px" }}>
+          <h2>{dept.name}</h2>
+
+          <ul>
+            {employees
+              .filter((emp) => emp.department === dept.name)
+              .map((emp) => (
+                <li key={emp.id}>
+                  {emp.firstName} {emp.lastName}
+                </li>
+              ))}
+          </ul>
+        </div>
       ))}
 
       <AddEmployeeForm
-        departmentNames={departmentNames}
+        departmentNames={departments.map((d) => d.name)}
         onAddEmployee={handleAddEmployee}
       />
     </main>
