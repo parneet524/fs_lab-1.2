@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Thompson",
+    "role": "Financial Advisor",
+    "department": "Investments",
+    "email": "sarah.thompson@pixellriver.com"
+  },
+  {
+    "id": 2,
+    "name": "Grace Allen",
+    "role": "Manager",
+    "department": "Management",
+    "email": "grace.allen@pixellriver.com"
+  },
+  {
+    "id": 3,
+    "name": "Robert Hill",
+    "role": "Operations Lead",
+    "department": "Management",
+    "email": "robert.hill@pixellriver.com"
+  },
+  {
+    "id": 4,
+    "name": "Emily Chen",
+    "role": "Software Engineer",
+    "department": "Technology",
+    "email": "emily.chen@pixellriver.com"
+  },
+  {
+    "id": 5,
+    "name": "David Singh",
+    "role": "DevOps Engineer",
+    "department": "Technology",
+    "email": "david.singh@pixellriver.com"
+  }
+]

@@ -10,35 +10,37 @@ export type Department = {
   name: string;
 };
 
-let departments: Department[] = [
-  { id: 1, name: "Management" },
-  { id: 2, name: "Technology" }
-];
-
-let employees: Employee[] = [];
-
 export const employeeRepo = {
-  getDepartments(): Department[] {
-    return departments;
+
+  async getDepartments(): Promise<Department[]> {
+    const response = await fetch("http://localhost:3000/api/departments");
+    return response.json();
   },
 
-  getEmployees(): Employee[] {
-    return employees;
+  async getEmployees(): Promise<Employee[]> {
+    const response = await fetch("http://localhost:3000/api/employees");
+    return response.json();
   },
 
-  createEmployee(
+  async createEmployee(
     firstName: string,
     lastName: string,
     department: string
-  ): Employee {
-    const newEmployee: Employee = {
-      id: employees.length + 1,
-      firstName,
-      lastName,
-      department
-    };
+  ): Promise<Employee> {
 
-    employees.push(newEmployee);
-    return newEmployee;
+    const response = await fetch("http://localhost:3000/api/employees", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        department
+      })
+    });
+
+    return response.json();
   }
+
 };
