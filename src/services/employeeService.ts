@@ -6,6 +6,8 @@ export const employeeService = {
     lastName: string,
     department: string
   ) {
+
+  
     if (firstName.trim().length < 3) {
       return {
         success: false,
@@ -23,6 +25,19 @@ export const employeeService = {
       return {
         success: false,
         message: "Department does not exist."
+      };
+    }
+
+    const employees = employeeRepo.getEmployees();
+
+    const departmentOccupied = employees.some(
+      (emp) => emp.department === department
+    );
+
+    if (departmentOccupied) {
+      return {
+        success: false,
+        message: "This department already has an employee assigned."
       };
     }
 

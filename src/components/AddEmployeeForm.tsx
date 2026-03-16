@@ -10,6 +10,7 @@ type Props = {
 };
 
 function AddEmployeeForm({ departmentNames, onAddEmployee }: Props) {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [department, setDepartment] = useState(departmentNames[0] ?? "");
@@ -30,7 +31,7 @@ function AddEmployeeForm({ departmentNames, onAddEmployee }: Props) {
       <h2>Add New Employee</h2>
 
       <div>
-        <label>First Name </label>
+        <label>First Name</label>
         <input
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -38,7 +39,7 @@ function AddEmployeeForm({ departmentNames, onAddEmployee }: Props) {
       </div>
 
       <div>
-        <label>Last Name </label>
+        <label>Last Name</label>
         <input
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -46,7 +47,7 @@ function AddEmployeeForm({ departmentNames, onAddEmployee }: Props) {
       </div>
 
       <div>
-        <label>Department </label>
+        <label>Department</label>
         <select
           value={department}
           onChange={(e) => setDepartment(e.target.value)}
