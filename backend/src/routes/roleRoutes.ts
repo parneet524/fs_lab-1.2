@@ -1,11 +1,11 @@
 import express from "express";
-import { getEmployees } from "../services/employeeService";
+import prisma from "../prisma";
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const employees = await getEmployees();
-  res.json(employees);
+  const roles = await prisma.role.findMany();
+  res.json(roles);
 });
 
 export default router;

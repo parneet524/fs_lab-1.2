@@ -1,17 +1,14 @@
-import employees from "../data/employees.json";
-import departments from "../data/departments.json";
-import roles from "../data/roles.json";
+import prisma from "../prisma";
 
-export const employeeRepository = {
-  getEmployees() {
-    return employees;
-  },
+export const getAllEmployees = async () => {
+  return await prisma.employee.findMany({
+    include: { role: true },
+  });
+};
 
-  getDepartments() {
-    return departments;
-  },
-
-  getRoles() {
-    return roles;
-  }
+export const getEmployeeById = async (id: number) => {
+  return await prisma.employee.findUnique({
+    where: { id },
+    include: { role: true },
+  });
 };

@@ -1,15 +1,5 @@
-import { employeeRepository } from "../repositories/employeeRepository";
+import * as repo from "../repositories/employeeRepository";
 
-export const employeeService = {
-  getEmployees() {
-    return employeeRepository.getEmployees();
-  },
-
-  getDepartments() {
-    return employeeRepository.getDepartments();
-  },
-
-  getRoles() {
-    return employeeRepository.getRoles();
-  }
+export const getEmployees = async () => {
+  return await repo.getAllEmployees();
 };
