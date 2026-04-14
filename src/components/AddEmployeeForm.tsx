@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 
 type Props = {
   departmentNames: string[];
@@ -27,42 +28,54 @@ function AddEmployeeForm({ departmentNames, onAddEmployee }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add New Employee</h2>
-
+  <>
+    <SignedOut>
       <div>
-        <label>First Name</label>
-        <input
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+        <h2>Add New Employee</h2>
+        <p>Please log in to add employee</p>
+        <SignInButton />
       </div>
+    </SignedOut>
 
-      <div>
-        <label>Last Name</label>
-        <input
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-      </div>
+    <SignedIn>
+      <form onSubmit={handleSubmit}>
+        <h2>Add New Employee</h2>
 
-      <div>
-        <label>Department</label>
-        <select
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
-        >
-          {departmentNames.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+          <label>First Name</label>
+          <input
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
 
-      <button type="submit">Add Employee</button>
-    </form>
-  );
+        <div>
+          <label>Last Name</label>
+          <input
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label>Department</label>
+          <select
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+          >
+            {departmentNames.map((name) => (
+              <option key={name} value={name}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button type="submit">Add Employee</button>
+      </form>
+    </SignedIn>
+  </>
+);
 }
 
 export default AddEmployeeForm;

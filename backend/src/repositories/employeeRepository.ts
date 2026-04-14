@@ -12,3 +12,19 @@ export const getEmployeeById = async (id: number) => {
     include: { role: true },
   });
 };
+
+export const createEmployee = async (
+  name: string,
+  email: string,
+  roleId: number
+) => {
+  return await prisma.employee.create({
+    data: {
+      name,
+      email,
+      role: {
+        connect: { id: roleId }
+      }
+    }
+  });
+};
