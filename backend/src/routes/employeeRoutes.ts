@@ -1,23 +1,14 @@
 import express from "express";
-import { getEmployees, employeeService } from "../services/employeeService";
+import {
+  getEmployeesController,
+  createEmployee,
+  deleteEmployee,
+} from "../controllers/employeeController";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const employees = await getEmployees();
-  res.json(employees);
-});
-
-router.post("/", async (req, res) => {
-  const { name, email, roleId } = req.body;
-
-  const result = await employeeService.createEmployee(
-    name,
-    email,
-    roleId
-  );
-
-  res.json(result);
-});
+router.get("/", getEmployeesController);
+router.post("/", createEmployee);
+router.delete("/:id", deleteEmployee);
 
 export default router;
